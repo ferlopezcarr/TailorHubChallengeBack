@@ -1,0 +1,27 @@
+[
+  {
+    "id": "1",
+    "email": "fernando@hw.com",
+    "name": "Fernando",
+    "lastname1": "López",
+    "lastname2": "Carrión",
+    "active": true
+  },
+  {
+    "email": "rafael@hw.com",
+    "name": "Rafel",
+    "lastname1": "Hernández",
+    "id": "3c1eubi",
+    "active": true,
+    "creationDate": "2022-03-24T08:33:08.915Z",
+    "lastname2": "a"
+  },
+  {
+    "email": "rafael@hw.com",
+    "name": "Rafel",
+    "lastname1": "Hernández",
+    "id": "0asrfij",
+    "active": true,
+    "creationDate": "2022-03-25T09:35:42.831Z"
+  }
+]

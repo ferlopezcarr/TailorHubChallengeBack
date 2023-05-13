@@ -1,0 +1,8 @@
+# Libs
+/node_modules
+
+# Deploy files
+/dist
+
+# Temp files
+.dccache

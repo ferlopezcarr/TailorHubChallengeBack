@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start:hr:dev",
+			"problemMatcher": [],
+			"label": "npm: start:hr:dev",
+			"detail": "nodemon src/server.ts env='development'",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
