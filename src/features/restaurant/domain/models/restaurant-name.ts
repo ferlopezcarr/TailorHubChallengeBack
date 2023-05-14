@@ -1,4 +1,4 @@
-import { FieldNotProvided } from "../../../core/domain/exceptions/field-not-provided-exception";
+import { FieldNotProvided } from "../../../core/domain/exceptions/field-not-provided.exception";
 
 export class RestaurantName {
   private name: string;

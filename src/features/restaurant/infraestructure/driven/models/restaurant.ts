@@ -1,13 +1,13 @@
-import { Review } from "./review";
-import { Location } from "./location";
+import { ReviewRepository } from "./review";
+import { LocationRepository } from "./location";
 
-export interface Restaurant {
+export interface RestaurantRepository {
   id: number;
   name: string;
   neighborhood: string;
   photograph: string;
   address: string;
-  latlng: Location;
+  latlng: LocationRepository;
   image: string;
   cuisine_type: string;
   operating_hours: {
@@ -19,5 +19,5 @@ export interface Restaurant {
     Saturday: string;
     Sunday: string;
   };
-  reviews: Review[];
+  reviews: ReviewRepository[];
 }

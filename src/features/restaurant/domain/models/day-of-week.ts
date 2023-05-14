@@ -7,3 +7,5 @@ export enum DayOfWeek {
   Saturday = "Saturday",
   Sunday = "Sunday",
 }
+
+export const DAY_OF_WEEK_KEYS = Object.keys(DayOfWeek);

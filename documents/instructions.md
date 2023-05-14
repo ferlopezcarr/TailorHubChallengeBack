@@ -30,5 +30,5 @@ Your task is to write a very simple restaurants list app.
 1. Deploy the app.
 2. JWT Authentication.
 3. Styled-components.
-4. TypeScript in the bakend 😍
+4. TypeScript in the backend 😍
 5. Write realistic unit/end-to-end tests.
