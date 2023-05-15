@@ -1,12 +1,16 @@
-import { FieldNotProvided } from "../../../core/domain/exceptions/field-not-provided.exception";
+import {
+  isIntegerNumber,
+  isNaturalNumber,
+  notUndefinedOrNull,
+} from "@core/domain/services";
 
 export class RestaurantId {
   private id: number;
 
   constructor(id: number) {
-    if (id === undefined || id === null) {
-      throw new FieldNotProvided();
-    }
+    notUndefinedOrNull(id);
+    isIntegerNumber(id);
+    isNaturalNumber(id);
     this.id = id;
   }
 }

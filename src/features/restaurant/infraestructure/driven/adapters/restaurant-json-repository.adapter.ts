@@ -2,7 +2,7 @@ import { FieldNotProvidedException } from "../../../../../core/domain/exceptions
 import { Restaurant } from "../../../domain/models/restaurant";
 import { RestaurantId } from "../../../domain/models/restaurant-id";
 
-import { RestaurantRepository } from "../models/restaurant";
+import { RestaurantRepository } from "../models/restaurant-repository";
 import { RestaurantRespositoryPort } from "../ports/restaurant-respository.port";
 
 export class RestaurantJsonRepositoryAdapter

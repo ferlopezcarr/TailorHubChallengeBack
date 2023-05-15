@@ -1,15 +1,15 @@
 {
-  "name": "tienda-online-server-alumnos",
+  "name": "tailor-hub-challenge-back",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "tsc --project ./",
-    "start": "npm run start:prod",
-    "start:dev": "npm run build && node dist/server.js",
+    "start": "pnpm run start:prod",
+    "start:dev": "pnpm run build && node dist/server.js",
     "start:hr:dev": "nodemon src/server.ts env='development'",
-    "start:prod": "npm run build && node dist/server.js env='production'",
+    "start:prod": "pnpm run build && node dist/server.js env='production'",
     "test": "jest --watchAll --collectCoverage",
     "test:unit": "jest test/unit",
     "test:integration": "jest test/integration"

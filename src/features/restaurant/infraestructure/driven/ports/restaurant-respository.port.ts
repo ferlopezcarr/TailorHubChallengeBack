@@ -2,7 +2,7 @@ import { CrudRepostory } from "../../../../../core/infraestructure/crud.reposito
 import { Restaurant } from "../../../domain/models/restaurant";
 import { RestaurantId } from "../../../domain/models/restaurant-id";
 
-import { RestaurantRepository } from "../models/restaurant";
+import { RestaurantRepository } from "../models/restaurant-repository";
 
 export interface RestaurantRespositoryPort
   extends CrudRepostory<Restaurant, RestaurantRepository> {

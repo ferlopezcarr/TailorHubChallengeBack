@@ -1,12 +1,11 @@
-import { FieldNotProvided } from "../../../core/domain/exceptions/field-not-provided.exception";
+import { notEmptyString, notUndefinedOrNull } from "@core/domain/services";
 
 export class RestaurantName {
   private name: string;
 
   constructor(name: string) {
-    if (name === undefined || name === null) {
-      throw new FieldNotProvided();
-    }
+    notUndefinedOrNull(name);
+    notEmptyString(name);
     this.name = name;
   }
 }

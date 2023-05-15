@@ -1,10 +1,11 @@
-import { notUndefinedOrNull } from "../../../core/domain/services/field-not-provided.validator";
+import { notEmptyString, notUndefinedOrNull } from "@core/domain/services";
 
 export class Neighborhood {
   private neighborhood: string;
 
   constructor(neighborhood: string) {
     notUndefinedOrNull(neighborhood);
+    notEmptyString(neighborhood);
     this.neighborhood = neighborhood;
   }
 }

@@ -1,21 +1,24 @@
 import { Request, Response } from "express";
-import { RestaurantService } from "../../../application/services/restaurant.service";
+import {
+  CreateRestaurantUseCase,
+  GetAllRestaurantsUseCase,
+} from "../../../application/use-cases";
 import { RestaurantApi } from "../models/restaurant-api.model";
 import { RestaurantApiPort } from "../ports/restaurant-api.port";
-import { CreateRestaurantUseCase } from "../../../application/use-cases/create-restaurant.use-case";
 
 export class RestaurantApiAdapter implements RestaurantApiPort {
   constructor(
-    private readonly restaurantService: RestaurantService,
+    private readonly getAllRestaurantsUseCase: GetAllRestaurantsUseCase,
     private readonly createRestaurantUseCase: CreateRestaurantUseCase
   ) {}
-  getById(req: Request, res: Response): Promise<void> {
+
+  async getById(req: Request, res: Response): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
   async getAll(res: Response): Promise<void> {
     try {
-      const restaurants = await this.restaurantService.getAll();
+      const restaurants = await this.getAllRestaurantsUseCase.execute();
       res.status(201).json(restaurants);
     } catch (error) {
       res.status(500).send(error);

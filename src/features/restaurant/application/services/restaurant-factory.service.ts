@@ -1,24 +1,31 @@
 import { notUndefinedOrNull } from "@core/domain/services/field-not-provided-validator.service";
 import { notEmptyArray } from "@core/domain/services/not-empty-validator.service";
-import { Address } from "../../domain/models/address";
-import { Coordinates } from "../../domain/models/coordinates";
-import { CuisineType } from "../../domain/models/cuisine-type";
-import { ImageUrl } from "../../domain/models/image-url";
-import { Neighborhood } from "../../domain/models/neighborhood";
-import { Photograph } from "../../domain/models/photograph";
-import { Restaurant } from "../../domain/models/restaurant";
-import { RestaurantId } from "../../domain/models/restaurant-id";
-import { RestaurantName } from "../../domain/models/restaurant-name";
-import { Author } from "../../domain/models/reviews/author";
-import { Review } from "../../domain/models/reviews/review";
-import { ReviewComments } from "../../domain/models/reviews/review-comments";
-import { ReviewDate } from "../../domain/models/reviews/review-date";
-import { ReviewRating } from "../../domain/models/reviews/review-rating";
-import { createOperatingHoursMapFromApi } from "../../domain/services/operating-hours-factory.service";
+import {
+  Address,
+  Author,
+  Coordinates,
+  CuisineType,
+  ImageUrl,
+  Neighborhood,
+  Photograph,
+  Restaurant,
+  RestaurantId,
+  RestaurantName,
+  Review,
+  ReviewComments,
+  ReviewDate,
+  ReviewRating,
+} from "../../domain";
+import {
+  createOperatingHoursMapFromApi,
+  createOperatingHoursMapFromRepository,
+} from "../../domain/services/operating-hours-factory.service";
+import { RestaurantRepository } from "../../infraestructure/driven/models/restaurant-repository";
 import { RestaurantApi } from "../../infraestructure/drivers/models/restaurant-api.model";
-import { RestaurantRepository } from "../../infraestructure/driven/models/restaurant";
 
-export const createRestaurantFromApi = (restaurantApi: RestaurantApi): Restaurant => {
+export const createRestaurantFromApi = (
+  restaurantApi: RestaurantApi
+): Restaurant => {
   const restaurantId = new RestaurantId(restaurantApi.id);
   const restaurantName = new RestaurantName(restaurantApi.name);
   const neighborhood = new Neighborhood(restaurantApi.neighborhood);
@@ -30,7 +37,9 @@ export const createRestaurantFromApi = (restaurantApi: RestaurantApi): Restauran
   );
   const imageUrl = new ImageUrl(restaurantApi.image);
   const cuisineType = new CuisineType(restaurantApi.cuisine_type);
-  const operatingHours = createOperatingHoursMapFromApi(restaurantApi.operating_hours);
+  const operatingHours = createOperatingHoursMapFromApi(
+    restaurantApi.operating_hours
+  );
   notUndefinedOrNull(restaurantApi.reviews);
   notEmptyArray(restaurantApi.reviews);
   const reviews = restaurantApi.reviews.map(
@@ -57,22 +66,26 @@ export const createRestaurantFromApi = (restaurantApi: RestaurantApi): Restauran
   );
 };
 
-export const createRestaurantFromRepository = (restaurantApi: RestaurantRepository): Restaurant => {
-  const restaurantId = new RestaurantId(restaurantApi.id);
-  const restaurantName = new RestaurantName(restaurantApi.name);
-  const neighborhood = new Neighborhood(restaurantApi.neighborhood);
-  const photograph = new Photograph(restaurantApi.photograph);
-  const address = new Address(restaurantApi.address);
+export const createRestaurantFromRepository = (
+  restaurantRepository: RestaurantRepository
+): Restaurant => {
+  const restaurantId = new RestaurantId(restaurantRepository.id);
+  const restaurantName = new RestaurantName(restaurantRepository.name);
+  const neighborhood = new Neighborhood(restaurantRepository.neighborhood);
+  const photograph = new Photograph(restaurantRepository.photograph);
+  const address = new Address(restaurantRepository.address);
   const location = new Coordinates(
-    restaurantApi.latlng.lat,
-    restaurantApi.latlng.lng
+    restaurantRepository.latlng.lat,
+    restaurantRepository.latlng.lng
   );
-  const imageUrl = new ImageUrl(restaurantApi.image);
-  const cuisineType = new CuisineType(restaurantApi.cuisine_type);
-  const operatingHours = createOperatingHoursMapFromApi(restaurantApi.operating_hours);
-  notUndefinedOrNull(restaurantApi.reviews);
-  notEmptyArray(restaurantApi.reviews);
-  const reviews = restaurantApi.reviews.map(
+  const imageUrl = new ImageUrl(restaurantRepository.image);
+  const cuisineType = new CuisineType(restaurantRepository.cuisine_type);
+  const operatingHours = createOperatingHoursMapFromRepository(
+    restaurantRepository.operating_hours
+  );
+  notUndefinedOrNull(restaurantRepository.reviews);
+  notEmptyArray(restaurantRepository.reviews);
+  const reviews = restaurantRepository.reviews.map(
     (review) =>
       new Review(
         new Author(review.name),

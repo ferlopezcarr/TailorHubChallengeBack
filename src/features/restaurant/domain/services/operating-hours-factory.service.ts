@@ -4,6 +4,7 @@ import { OperatingHoursMapApi } from "../../infraestructure/drivers/models/opera
 import { DAY_OF_WEEK_KEYS } from "../models/day-of-week";
 import { OperatingHours } from "../models/operating-hours";
 import { OperatingHoursMap } from "../models/operating-hours-map";
+import { OperatingHoursMapRepository } from "../../infraestructure/driven/models/operating-hours-map-repository";
 
 export const createOperatingHoursMapFromApi = (
   operatingHours: OperatingHoursMapApi
@@ -18,7 +19,7 @@ export const createOperatingHoursMapFromApi = (
       throw new Error();
     }
     operatingHoursMap[dayOfWeek] = new OperatingHours(
-      operatingHours.endHours,
+      operatingHours.startHours,
       operatingHours.endHours
     );
   });
@@ -26,7 +27,7 @@ export const createOperatingHoursMapFromApi = (
 };
 
 export const createOperatingHoursMapFromRepository = (
-  operatingHours: OperatingHoursRepository
+  operatingHours: OperatingHoursMapRepository
 ): OperatingHoursMap => {
   let operatingHoursMap: OperatingHoursMap = {};
   notUndefinedOrNull(operatingHours);
@@ -34,14 +35,15 @@ export const createOperatingHoursMapFromRepository = (
     notUndefinedOrNull(dayOfWeek);
     notEmptyString(dayOfWeek);
     notUndefinedOrNull(operatingHours);
+    notEmptyString(operatingHours);
     if (!DAY_OF_WEEK_KEYS.includes(dayOfWeek)) {
       throw new Error();
     }
+    const [startHours, endHours] = operatingHours.split(", ");
     operatingHoursMap[dayOfWeek] = new OperatingHours(
-      operatingHours.endHours,
-      operatingHours.endHours
+      startHours,
+      endHours
     );
   });
   return operatingHoursMap;
 };
-

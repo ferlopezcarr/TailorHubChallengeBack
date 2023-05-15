@@ -1,4 +1,4 @@
-import { notUndefinedOrNull } from "@core/domain/services/field-not-provided-validator.service";
+import { notUndefinedOrNull } from "@core/domain/services";
 import { Address } from "./address";
 import { Coordinates } from "./coordinates";
 import { CuisineType } from "./cuisine-type";
