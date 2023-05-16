@@ -1,4 +1,4 @@
-import { notUndefinedOrNull } from "@core/domain/services/field-not-provided-validator.service";
+import { notUndefinedOrNull } from "@core/domain/services";
 import { Author } from "./author";
 import { ReviewComments } from "./review-comments";
 import { ReviewDate } from "./review-date";

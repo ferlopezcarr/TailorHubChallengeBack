@@ -1,5 +1,5 @@
 import { UseCase } from "@core/application/use-case";
-import { notUndefinedOrNull } from "@core/domain/services/field-not-provided-validator.service";
+import { notUndefinedOrNull } from "@core/domain/services";
 import { Restaurant } from "../../domain";
 import { RestaurantRespositoryPort } from "../../infraestructure/driven/ports/restaurant-respository.port";
 import { createRestaurantFromRepository } from "../services/restaurant-factory.service";

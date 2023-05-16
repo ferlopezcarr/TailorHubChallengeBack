@@ -7,7 +7,7 @@
     "preinstall": "npx only-allow pnpm",
     "build": "tsc --project ./",
     "start": "pnpm run start:prod",
-    "start:dev": "pnpm run build && node dist/server.js",
+    "start:dev": "pnpm run build && ts-node ./dist/server.js",
     "start:hr:dev": "nodemon src/server.ts env='development'",
     "start:prod": "pnpm run build && node dist/server.js env='production'",
     "test": "jest --watchAll --collectCoverage",
@@ -39,6 +39,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "^27.1.5",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^4.9.5"
   }
 }

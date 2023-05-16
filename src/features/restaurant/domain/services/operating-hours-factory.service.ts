@@ -1,10 +1,9 @@
-import { notUndefinedOrNull } from "@core/domain/services/field-not-provided-validator.service";
-import { notEmptyString } from "@core/domain/services/not-empty-validator.service";
+import { notEmptyString, notUndefinedOrNull } from "@core/domain/services";
+import { OperatingHoursMapRepository } from "../../infraestructure/driven/models/operating-hours-map-repository";
 import { OperatingHoursMapApi } from "../../infraestructure/drivers/models/operating-hours-map-api.model";
 import { DAY_OF_WEEK_KEYS } from "../models/day-of-week";
 import { OperatingHours } from "../models/operating-hours";
 import { OperatingHoursMap } from "../models/operating-hours-map";
-import { OperatingHoursMapRepository } from "../../infraestructure/driven/models/operating-hours-map-repository";
 
 export const createOperatingHoursMapFromApi = (
   operatingHours: OperatingHoursMapApi
@@ -40,10 +39,7 @@ export const createOperatingHoursMapFromRepository = (
       throw new Error();
     }
     const [startHours, endHours] = operatingHours.split(", ");
-    operatingHoursMap[dayOfWeek] = new OperatingHours(
-      startHours,
-      endHours
-    );
+    operatingHoursMap[dayOfWeek] = new OperatingHours(startHours, endHours);
   });
   return operatingHoursMap;
 };

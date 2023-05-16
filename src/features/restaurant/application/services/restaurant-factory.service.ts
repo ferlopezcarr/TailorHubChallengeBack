@@ -1,5 +1,4 @@
-import { notUndefinedOrNull } from "@core/domain/services/field-not-provided-validator.service";
-import { notEmptyArray } from "@core/domain/services/not-empty-validator.service";
+import { notEmptyArray, notUndefinedOrNull } from "@core/domain/services";
 import {
   Address,
   Author,
@@ -15,11 +14,9 @@ import {
   ReviewComments,
   ReviewDate,
   ReviewRating,
-} from "../../domain";
-import {
   createOperatingHoursMapFromApi,
   createOperatingHoursMapFromRepository,
-} from "../../domain/services/operating-hours-factory.service";
+} from "../../domain";
 import { RestaurantRepository } from "../../infraestructure/driven/models/restaurant-repository";
 import { RestaurantApi } from "../../infraestructure/drivers/models/restaurant-api.model";
 
@@ -69,6 +66,7 @@ export const createRestaurantFromApi = (
 export const createRestaurantFromRepository = (
   restaurantRepository: RestaurantRepository
 ): Restaurant => {
+  notUndefinedOrNull(restaurantRepository);
   const restaurantId = new RestaurantId(restaurantRepository.id);
   const restaurantName = new RestaurantName(restaurantRepository.name);
   const neighborhood = new Neighborhood(restaurantRepository.neighborhood);

@@ -3,7 +3,6 @@ import { HealthRoutes } from "./core/infraestructure/routes/health.routes";
 import { MainRoutes } from "./core/infraestructure/routes/main.routes";
 import { Routes } from "./core/infraestructure/routes/routes";
 import { RestaurantRoutes } from "./features/restaurant/restaurant.routes";
-import { UserRoutes } from "./features/user/routes/user.routes";
 
 export class App {
   public expressApp: express.Application;
@@ -19,7 +18,6 @@ export class App {
     this.routes = [
       new MainRoutes(this.expressApp),
       new HealthRoutes(this.expressApp),
-      new UserRoutes(this.expressApp),
       new RestaurantRoutes(this.expressApp),
     ];
   }

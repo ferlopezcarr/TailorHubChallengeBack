@@ -7,18 +7,18 @@ import {
   createRestaurantFromRepository,
 } from "../services/restaurant-factory.service";
 
-export class CreateRestaurantUseCase implements UseCase {
+export class UpdateRestaurantUseCase implements UseCase {
   constructor(
     private readonly restaurantRepository: RestaurantRespositoryPort
   ) {}
 
   async execute(restaurantApi: RestaurantApi): Promise<Restaurant> {
     const restaurant = createRestaurantFromApi(restaurantApi);
-    const createdRestaurantFromRepository =
-      await this.restaurantRepository.create(restaurant);
-    const createdRestaurant = createRestaurantFromRepository(
-      createdRestaurantFromRepository
+    const updatedRestaurantFromRepository =
+      await this.restaurantRepository.update(restaurant);
+    const updatedRestaurant = createRestaurantFromRepository(
+      updatedRestaurantFromRepository
     );
-    return createdRestaurant;
+    return updatedRestaurant;
   }
 }

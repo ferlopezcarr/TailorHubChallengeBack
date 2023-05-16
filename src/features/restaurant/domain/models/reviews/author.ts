@@ -1,5 +1,4 @@
-import { notUndefinedOrNull } from "@core/domain/services/field-not-provided-validator.service";
-import { notEmptyString } from "@core/domain/services/not-empty-validator.service";
+import { notUndefinedOrNull, notEmptyString } from "@core/domain/services";
 
 export class Author {
   constructor(private author: string) {
