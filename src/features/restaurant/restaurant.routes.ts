@@ -1,5 +1,5 @@
 import { Application } from "express";
-import { Routes } from "../../core/infraestructure/routes/routes";
+import { Router } from "../../core/infraestructure/routes/router";
 import {
   CreateRestaurantUseCase,
   DeleteRestaurantUseCase,
@@ -10,13 +10,9 @@ import {
 import { RestaurantJsonRepositoryAdapter } from "./infraestructure/driven/adapters/restaurant-json-repository.adapter";
 import { RestaurantApiAdapter } from "./infraestructure/drivers/adapters/restaurant-api.adapter";
 
-export class RestaurantRoutes extends Routes {
-  static readonly RESTAURANT_ROUTE = "restaurant";
-  static readonly RESTAURANTS_ROUTE = "restaurants";
+export class RestaurantControlPlane {
 
   constructor(private app: Application) {
-    super(RestaurantRoutes.RESTAURANT_ROUTE);
-
     // Driven
     const restaurantJsonRepository = new RestaurantJsonRepositoryAdapter();
     // App
@@ -38,22 +34,12 @@ export class RestaurantRoutes extends Routes {
 
     // Drivers
     const restaurantApi = new RestaurantApiAdapter(
+      app,
       getRestaurantByIdUseCase,
       getAllRestaurantsUseCase,
       createRestaurantUseCase,
       updateRestaurantUseCase,
       deleteRestaurantUseCase
     );
-
-    // Routes
-    const restaurantsFullRoute = this.getApiPath(
-      RestaurantRoutes.RESTAURANTS_ROUTE
-    );
-
-    this.app.get(this.route, restaurantApi.getById);
-    this.app.get(restaurantsFullRoute, restaurantApi.getAll);
-    this.app.post(this.route, restaurantApi.create);
-    this.app.put(this.route, restaurantApi.update);
-    this.app.delete(this.route, restaurantApi.delete);
   }
 }

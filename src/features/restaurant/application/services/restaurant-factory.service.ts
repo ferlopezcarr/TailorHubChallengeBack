@@ -23,6 +23,7 @@ import { RestaurantApi } from "../../infraestructure/drivers/models/restaurant-a
 export const createRestaurantFromApi = (
   restaurantApi: RestaurantApi
 ): Restaurant => {
+  notUndefinedOrNull(restaurantApi);
   const restaurantId = new RestaurantId(restaurantApi.id);
   const restaurantName = new RestaurantName(restaurantApi.name);
   const neighborhood = new Neighborhood(restaurantApi.neighborhood);
@@ -83,15 +84,15 @@ export const createRestaurantFromRepository = (
   );
   notUndefinedOrNull(restaurantRepository.reviews);
   notEmptyArray(restaurantRepository.reviews);
-  const reviews = restaurantRepository.reviews.map(
-    (review) =>
-      new Review(
-        new Author(review.name),
-        new ReviewDate(review.date),
-        new ReviewRating(review.rating),
-        new ReviewComments(review.comments)
-      )
-  );
+  const reviews = restaurantRepository.reviews.map((review) => {
+    const date = new Date(review.date);
+    return new Review(
+      new Author(review.name),
+      new ReviewDate(date),
+      new ReviewRating(review.rating),
+      new ReviewComments(review.comments)
+    );
+  });
 
   return new Restaurant(
     restaurantId,

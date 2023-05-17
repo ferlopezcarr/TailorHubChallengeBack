@@ -1,25 +1,20 @@
 import express from "express";
-import { HealthRoutes } from "./core/infraestructure/routes/health.routes";
-import { MainRoutes } from "./core/infraestructure/routes/main.routes";
-import { Routes } from "./core/infraestructure/routes/routes";
-import { RestaurantRoutes } from "./features/restaurant/restaurant.routes";
+import { HealthRouter } from "./core/infraestructure/routes/health.router";
+import { MainRouter } from "./core/infraestructure/routes/main.router";
+import { RestaurantControlPlane } from "./features/restaurant/restaurant.routes";
 
 export class App {
   public expressApp: express.Application;
   public port: number;
-
-  private routes: Routes[];
 
   constructor(port: number, middlewares?: any[]) {
     this.expressApp = express(); //run the express instance and store in app
     this.port = port;
     this.middlewares(middlewares);
 
-    this.routes = [
-      new MainRoutes(this.expressApp),
-      new HealthRoutes(this.expressApp),
-      new RestaurantRoutes(this.expressApp),
-    ];
+    new MainRouter(this.expressApp);
+    new HealthRouter(this.expressApp);
+    new RestaurantControlPlane(this.expressApp);
   }
 
   private middlewares(middlewares?: any[]) {

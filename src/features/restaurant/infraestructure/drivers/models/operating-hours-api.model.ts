@@ -1,5 +1,5 @@
 
 export interface OperatingHoursApi {
   startHours: string;
-  endHours: string;
+  endHours?: string;
 }

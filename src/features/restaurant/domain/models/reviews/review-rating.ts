@@ -11,9 +11,13 @@ export class ReviewRating {
     notUndefinedOrNull(rating);
     isIntegerNumber(rating);
     isNaturalNumber(rating);
-    if (rating > 5) {
+    if (rating > this.MAXIMUM_RATING) {
       throw new Error(`Rating must be greater than ${this.MAXIMUM_RATING}`);
     }
     this.rating = rating;
+  }
+
+  public getRating(): number {
+    return this.rating;
   }
 }

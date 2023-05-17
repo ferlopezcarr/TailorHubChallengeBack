@@ -8,4 +8,8 @@ export class Address {
     notEmptyString(address);
     this.address = address;
   }
+
+  public getAddress(): string {
+    return this.address;
+  }
 }

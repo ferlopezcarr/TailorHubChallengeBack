@@ -34,4 +34,44 @@ export class Restaurant {
     this.operatingHours = notUndefinedOrNull(operatingHours);
     this.reviews = notUndefinedOrNull(reviews);
   }
+  
+  public getId(): RestaurantId {
+    return this.id;
+  }
+
+  public getName(): RestaurantName {
+    return this.name;
+  }
+
+  public getNeighborhood(): Neighborhood {
+    return this.neighborhood;
+  }
+
+  public getPhotograph(): Photograph {
+    return this.photograph;
+  }
+
+  public getAddress(): Address {
+    return this.address;
+  }
+
+  public getLocation(): Coordinates {
+    return this.location;
+  }
+
+  public getImageUrl(): ImageUrl {
+    return this.imageUrl;
+  }
+
+  public getCuisineType(): CuisineType {
+    return this.cuisineType;
+  }
+
+  public getOperatingHours(): OperatingHoursMap {
+    return this.operatingHours;
+  }
+
+  public getReviews(): Review[] {
+    return this.reviews;
+  }
 }

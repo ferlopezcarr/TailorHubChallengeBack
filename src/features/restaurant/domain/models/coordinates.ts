@@ -9,4 +9,12 @@ export class Coordinates {
     this.latitude = new Latitude(latitude);
     this.longitude = new Longitude(longitude);
   }
+
+  public getLatitude(): Latitude {
+    return this.latitude;
+  }
+
+  public getLongitude(): Longitude {
+    return this.longitude;
+  }
 }

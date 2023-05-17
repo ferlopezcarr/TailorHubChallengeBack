@@ -1,6 +1,6 @@
 export interface ReviewRepository {
   name: string;
-  date: Date;
+  date: string;
   rating: number;
   comments: string;
 }

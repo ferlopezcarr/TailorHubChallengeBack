@@ -6,4 +6,8 @@ export class ReviewComments {
     notEmptyString(reviewComments);
     this.reviewComments = reviewComments;
   }
+
+  public getReviewComments(): string {
+    return this.reviewComments;
+  }
 }

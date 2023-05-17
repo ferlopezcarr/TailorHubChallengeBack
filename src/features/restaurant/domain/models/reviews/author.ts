@@ -6,4 +6,8 @@ export class Author {
     notEmptyString(author);
     this.author = author;
   }
+
+  public getAuthor(): string {
+    return this.author;
+  }
 }

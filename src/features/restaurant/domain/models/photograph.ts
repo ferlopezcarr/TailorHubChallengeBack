@@ -8,4 +8,8 @@ export class Photograph {
     notEmptyString(photograph);
     this.photograph = photograph;
   }
+
+  public getPhotograph(): string {
+    return this.photograph;
+  }
 }

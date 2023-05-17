@@ -1,7 +1,16 @@
 import {
   NotIntegerNumberException,
   NotNaturalNumberException,
+  NotNumberException,
 } from "../exceptions/number.exception";
+
+export const isNumber = (field: string): number => {
+  try {
+    return Number(field);
+  } catch (error) {
+    throw new NotNumberException();
+  }
+};
 
 export const isIntegerNumber = (field: number): number => {
   if (!Number.isSafeInteger(field)) {

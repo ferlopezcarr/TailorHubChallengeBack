@@ -8,4 +8,8 @@ export class CuisineType {
     notEmptyString(cuisineType);
     this.cuisineType = cuisineType;
   }
+
+  public getCuisineType(): string {
+    return this.cuisineType;
+  }
 }

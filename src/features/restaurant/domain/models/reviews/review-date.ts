@@ -5,4 +5,8 @@ export class ReviewDate {
     notUndefinedOrNull(reviewDate);
     this.reviewDate = reviewDate;
   }
+
+  public getReviewDate(): Date {
+    return this.reviewDate;
+  }
 }

@@ -6,4 +6,8 @@ export class ImageUrl {
     notEmptyString(imageUrl);
     this.imageUrl = imageUrl;
   }
+
+  public getImageUrl(): string {
+    return this.imageUrl;
+  }
 }

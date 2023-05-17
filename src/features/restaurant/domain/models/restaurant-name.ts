@@ -8,4 +8,8 @@ export class RestaurantName {
     notEmptyString(name);
     this.name = name;
   }
+
+  public getName(): string {
+    return this.name;
+  }
 }

@@ -8,4 +8,9 @@ export class Neighborhood {
     notEmptyString(neighborhood);
     this.neighborhood = neighborhood;
   }
+
+  public getNeighborhood(): string {
+    return this.neighborhood;
+  }
+
 }

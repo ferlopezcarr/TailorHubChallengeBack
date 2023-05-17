@@ -16,4 +16,20 @@ export class Review {
     this.rating = notUndefinedOrNull(rating);
     this.comments = notUndefinedOrNull(comments);
   }
+
+  public getAuthor(): Author {
+    return this.author;
+  }
+
+  public getDate(): ReviewDate {
+    return this.date;
+  }
+
+  public getRating(): ReviewRating {
+    return this.rating;
+  }
+
+  public getComments(): ReviewComments {
+    return this.comments;
+  }
 }

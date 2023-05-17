@@ -13,4 +13,8 @@ export class RestaurantId {
     isNaturalNumber(id);
     this.id = id;
   }
+
+  public getId(): number {
+    return this.id;
+  }
 }

@@ -1,13 +1,8 @@
 import { ENV_CONFIG } from "../../../config/env.config";
 
-export class Routes {
-    protected route;
+export class Router {
     private _apiPrefix: string = ENV_CONFIG.API_PREFIX;
     private _apiVersion: string = ENV_CONFIG.API_VERSION;
-    
-    constructor(route: string) {
-        this.route = this.getApiPath(route);
-    }
 
     protected getApiPath(route: string): string {
         if (route === undefined || route === null) {
