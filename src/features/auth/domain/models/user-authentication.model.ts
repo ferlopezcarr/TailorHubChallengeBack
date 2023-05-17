@@ -1,6 +1,6 @@
 import { notUndefinedOrNull } from "@core/domain/services";
 import { Password } from "./password.model";
-import { Username } from "./username.model";
+import { Username } from "../../../user/domain/username.model";
 
 export class UserAuthentication {
   private username: Username;
@@ -9,5 +9,13 @@ export class UserAuthentication {
   constructor(username: Username, password: Password) {
     this.username = notUndefinedOrNull(username);
     this.password = notUndefinedOrNull(password);
+  }
+
+  public getUsername(): Username {
+    return this.username;
+  }
+
+  public getPassword(): Password {
+    return this.password;
   }
 }
