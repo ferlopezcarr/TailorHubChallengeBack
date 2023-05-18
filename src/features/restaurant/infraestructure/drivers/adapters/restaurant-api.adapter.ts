@@ -8,21 +8,24 @@ import {
 } from "../../../application/use-cases";
 import { RestaurantApi } from "../models/restaurant-api.model";
 import { RestaurantApiPort } from "../ports/restaurant-api.port";
-import { Router } from "@core/infraestructure/routes/router";
+import { Router } from "@core/infraestructure/drivers/models/router";
 import {
   isIntegerNumber,
   isNaturalNumber,
   isNumber,
+  notEmptyString,
   notUndefinedOrNull,
 } from "@core/domain/services";
-import { createRestaurantApiFromDomain } from "../services/restaurant-api-factory.service";
+import { createRestaurantApiFromRestaurant } from "../services/restaurant-api-factory.service";
+import { Middleware } from "@core/infraestructure/drivers/ports/middleware";
 
 export class RestaurantApiAdapter extends Router implements RestaurantApiPort {
   private readonly RESTAURANT_ROUTE = "restaurant";
   private readonly RESTAURANTS_ROUTE = "restaurants";
 
   constructor(
-    private app: Application,
+    app: Application,
+    authMiddleware: Middleware,
     private readonly getRestaurantByIdUseCase: GetRestaurantByIdUseCase,
     private readonly getAllRestaurantsUseCase: GetAllRestaurantsUseCase,
     private readonly createRestaurantUseCase: CreateRestaurantUseCase,
@@ -35,21 +38,34 @@ export class RestaurantApiAdapter extends Router implements RestaurantApiPort {
     const restaurantRoute = this.getApiPath(this.RESTAURANT_ROUTE);
     const restaurantsFullRoute = this.getApiPath(this.RESTAURANTS_ROUTE);
 
-    this.app.get(`${restaurantRoute}/:id`, this.getById.bind(this));
-    this.app.get(restaurantsFullRoute, this.getAll.bind(this));
-    this.app.post(restaurantRoute, this.create.bind(this));
-    this.app.put(restaurantRoute, this.update.bind(this));
-    this.app.delete(restaurantRoute, this.delete.bind(this));
+    app.get(`${restaurantRoute}/:id`, this.getById.bind(this));
+    app.get(restaurantsFullRoute, this.getAll.bind(this));
+    app.post(
+      restaurantRoute,
+      authMiddleware.intercept.bind(authMiddleware),
+      this.create.bind(this)
+    );
+    app.put(
+      restaurantRoute,
+      authMiddleware.intercept.bind(authMiddleware),
+      this.update.bind(this)
+    );
+    app.delete(
+      restaurantRoute,
+      authMiddleware.intercept.bind(authMiddleware),
+      this.delete.bind(this)
+    );
   }
 
   async getById(req: Request, res: Response): Promise<void> {
     try {
-      const id = isNumber(req.params?.id);
-      const restaurantId: number = isNaturalNumber(id);
+      const restaurantId = isNumber(
+        notEmptyString(notUndefinedOrNull(req.body?.id))
+      );
       const restaurant = await this.getRestaurantByIdUseCase.execute(
         restaurantId
       );
-      const restaurantApi = createRestaurantApiFromDomain(restaurant);
+      const restaurantApi = createRestaurantApiFromRestaurant(restaurant);
       res.status(200).json(restaurantApi);
     } catch (error) {
       res.status(500).send(error);
@@ -61,7 +77,7 @@ export class RestaurantApiAdapter extends Router implements RestaurantApiPort {
       const restaurants = await this.getAllRestaurantsUseCase.execute();
       notUndefinedOrNull(restaurants);
       const restaurantsApi = restaurants.map((restaurant) =>
-        createRestaurantApiFromDomain(restaurant)
+        createRestaurantApiFromRestaurant(restaurant)
       );
       res.status(200).json(restaurantsApi);
     } catch (error) {
@@ -77,6 +93,7 @@ export class RestaurantApiAdapter extends Router implements RestaurantApiPort {
       );
       res.status(201).json(restaurant);
     } catch (error) {
+      console.error(error);
       res.status(500).send(error);
     }
   }
@@ -95,9 +112,14 @@ export class RestaurantApiAdapter extends Router implements RestaurantApiPort {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const restaurantApi: RestaurantApi = req.body as RestaurantApi;
-      const restaurant = await this.deleteRestaurantUseCase.execute(restaurantApi?.id);
-      const deletedRestaurantApi = createRestaurantApiFromDomain(restaurant);
+      const restaurantId = isNumber(
+        notEmptyString(notUndefinedOrNull(req.body?.id))
+      );
+      const restaurant = await this.deleteRestaurantUseCase.execute(
+        restaurantId
+      );
+      const deletedRestaurantApi =
+        createRestaurantApiFromRestaurant(restaurant);
       res.status(200).json(deletedRestaurantApi);
     } catch (error) {
       res.status(500).send(error);

@@ -2,10 +2,15 @@ import { isIntegerNumber, isNaturalNumber, notUndefinedOrNull } from "@core/doma
 
 export class UserId {
   private id: number;
+
   constructor(id: number) {
     notUndefinedOrNull(id);
     isIntegerNumber(id);
     isNaturalNumber(id);
     this.id = id;
+  }
+
+  public getId(): number {
+    return this.id;
   }
 }

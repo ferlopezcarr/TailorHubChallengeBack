@@ -12,9 +12,30 @@ export class NotIntegerNumberException extends Error {
   }
 }
 
+export class NotFloatNumberException extends Error {
+  private static readonly defaultMessage = "Not a float number";
+  constructor() {
+    super(NotFloatNumberException.defaultMessage);
+  }
+}
+
 export class NotNaturalNumberException extends Error {
   private static readonly defaultMessage = "Not a natural number";
   constructor() {
     super(NotNaturalNumberException.defaultMessage);
+  }
+}
+
+export class InvalidMinNumberException extends Error {
+  private static readonly defaultMessage = "Invalid value, value must be at least ";
+  constructor(private readonly min: number) {
+    super(`${InvalidMinNumberException.defaultMessage} ${min}`);
+  }
+}
+
+export class InvalidMaxNumberException extends Error {
+  private static readonly defaultMessage = "Invalid value, value must be at most ";
+  constructor(private readonly max: number) {
+    super(`${InvalidMaxNumberException.defaultMessage} ${max}`);
   }
 }

@@ -1,13 +1,15 @@
-import { CrudRepostory } from "@core/infraestructure/crud.repository";
-import { User, UserId } from "../../../domain";
+import { RestaurantId } from "../../../../restaurant/domain";
+import { User, UserId, Username } from "../../../domain";
+import { UnregisteredUser } from "../../../domain/unregistered-user.model";
 import { UserRepository } from "../models/user-repository.model";
 
-export interface UserRespositoryPort
-  extends CrudRepostory<User, UserRepository> {
-  create(user: User): Promise<UserRepository>;
-  getById(restaurantId: UserId): Promise<UserRepository>;
-  getAll(): Promise<UserRepository[]>;
-  update(user: User): Promise<UserRepository>;
-  delete(user: User): Promise<UserRepository>;
-  markAsFavorite(user: User): Promise<UserRepository>;
+export interface UserRepositoryPort {
+  create(unregisteredUser: UnregisteredUser): Promise<UserRepository>;
+  getById(userId: UserId): Promise<UserRepository>;
+  getByUsername(username: Username): Promise<UserRepository>;
+  markRestaurantAsFavourite(
+    userId: UserId,
+    restaurantId: RestaurantId,
+    favouriteState: boolean
+  ): Promise<UserRepository>;
 }

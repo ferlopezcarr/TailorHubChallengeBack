@@ -21,11 +21,14 @@ const API_PREFIX = process.env.API_PREFIX === undefined ?
     'api' : process.env.API_PREFIX;
 const API_VERSION = process.env.API_VERSION === undefined ?
     'v1' : process.env.API_VERSION;
+const JWT_SECRET = process.env.JWT_SECRET === undefined ?
+    'secret' : process.env.JWT_SECRET;
 
 export const ENV_CONFIG = {
     DEFAULT_PORT,
     PORT,
     ENVIRONMENT,
     API_PREFIX,
-    API_VERSION
+    API_VERSION,
+    JWT_SECRET,
 };

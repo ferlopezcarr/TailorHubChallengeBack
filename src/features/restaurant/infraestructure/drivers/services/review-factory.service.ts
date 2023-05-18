@@ -2,7 +2,7 @@ import { notUndefinedOrNull } from "@core/domain/services";
 import { Review } from "../../../domain";
 import { ReviewApi } from "../models/review-api.model";
 
-export const createReviewApiFromDomain = (review: Review): ReviewApi => {
+export const createReviewApiFromReview = (review: Review): ReviewApi => {
   notUndefinedOrNull(review);
   return {
     name: review.getAuthor().getAuthor(),

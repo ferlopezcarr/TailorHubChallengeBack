@@ -3,7 +3,7 @@ import { OperatingHoursMap } from "../../../domain";
 import { OperatingHoursApi } from "../models/operating-hours-api.model";
 import { OperatingHoursMapApi } from "../models/operating-hours-map-api.model";
 
-export const createOperatingHoursMapApiFromDomain = (
+export const createOperatingHoursMapApiFromOperatingHours = (
   operatingHoursMap: OperatingHoursMap
 ): OperatingHoursMapApi => {
   const operatingHoursMapApi: OperatingHoursMapApi = {};

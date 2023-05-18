@@ -1,12 +1,13 @@
 import { UseCase } from "@core/application/use-case";
 import { notUndefinedOrNull } from "@core/domain/services";
 import { Restaurant, RestaurantId } from "../../domain";
-import { RestaurantRespositoryPort } from "../../infraestructure/driven/ports/restaurant-respository.port";
+import { RestaurantRepositoryPort } from "../../infraestructure/driven/ports/restaurant-repository.port";
 import { createRestaurantFromRepository } from "../services/restaurant-factory.service";
+import { EntityNotFoundException } from "@core/application/exceptions/entity-not-found.exception";
 
 export class DeleteRestaurantUseCase implements UseCase {
   constructor(
-    private readonly restaurantRepository: RestaurantRespositoryPort
+    private readonly restaurantRepository: RestaurantRepositoryPort
   ) {}
 
   async execute(id: number): Promise<Restaurant> {
@@ -14,14 +15,13 @@ export class DeleteRestaurantUseCase implements UseCase {
     const restaurantFromRepository = await this.restaurantRepository.getById(
       restaurantId
     );
-    notUndefinedOrNull(restaurantFromRepository);
+    if (!restaurantFromRepository) {
+      throw new EntityNotFoundException();
+    }
     const restaurant = createRestaurantFromRepository(restaurantFromRepository);
     const deletedRestaurantRepository = await this.restaurantRepository.delete(
       restaurant
     );
-    const deletedRestaurant = createRestaurantFromRepository(
-      deletedRestaurantRepository
-    );
-    return deletedRestaurant;
+    return createRestaurantFromRepository(deletedRestaurantRepository);
   }
 }

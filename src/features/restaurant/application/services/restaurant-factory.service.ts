@@ -5,6 +5,8 @@ import {
   Coordinates,
   CuisineType,
   ImageUrl,
+  Latitude,
+  Longitude,
   Neighborhood,
   Photograph,
   Restaurant,
@@ -29,10 +31,9 @@ export const createRestaurantFromApi = (
   const neighborhood = new Neighborhood(restaurantApi.neighborhood);
   const photograph = new Photograph(restaurantApi.photograph);
   const address = new Address(restaurantApi.address);
-  const location = new Coordinates(
-    restaurantApi.latlng.lat,
-    restaurantApi.latlng.lng
-  );
+  const latitude = new Latitude(restaurantApi.latlng.lat);
+  const longitude = new Longitude(restaurantApi.latlng.lng);
+  const location = new Coordinates(latitude, longitude);
   const imageUrl = new ImageUrl(restaurantApi.image);
   const cuisineType = new CuisineType(restaurantApi.cuisine_type);
   const operatingHours = createOperatingHoursMapFromApi(
@@ -73,10 +74,9 @@ export const createRestaurantFromRepository = (
   const neighborhood = new Neighborhood(restaurantRepository.neighborhood);
   const photograph = new Photograph(restaurantRepository.photograph);
   const address = new Address(restaurantRepository.address);
-  const location = new Coordinates(
-    restaurantRepository.latlng.lat,
-    restaurantRepository.latlng.lng
-  );
+  const latitude = new Latitude(restaurantRepository.latlng.lat);
+  const longitude = new Longitude(restaurantRepository.latlng.lng);
+  const location = new Coordinates(latitude, longitude);
   const imageUrl = new ImageUrl(restaurantRepository.image);
   const cuisineType = new CuisineType(restaurantRepository.cuisine_type);
   const operatingHours = createOperatingHoursMapFromRepository(

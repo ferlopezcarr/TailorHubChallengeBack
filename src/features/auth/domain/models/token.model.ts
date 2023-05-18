@@ -1,15 +1,20 @@
-import { notEmptyString, notUndefinedOrNull } from "@core/domain/services";
+import {
+    maxLength,
+    notEmptyString,
+    notUndefinedOrNull,
+} from "@core/domain/services";
 
 export class Token {
-    constructor(
-        private token: string,
-    ) {
-        notUndefinedOrNull(token);
-        notEmptyString(token);
-        this.token = token;
-    }
+  public static readonly TOKEN_MAX_LENGTH = 4096;
 
-    public getToken(): string {
-        return this.token;
-    }
+  constructor(private token: string) {
+    notUndefinedOrNull(token);
+    notEmptyString(token);
+    maxLength(token, Token.TOKEN_MAX_LENGTH);
+    this.token = token;
+  }
+
+  public getToken(): string {
+    return this.token;
+  }
 }

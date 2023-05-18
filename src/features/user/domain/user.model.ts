@@ -17,4 +17,16 @@ export class User {
     this.username = notUndefinedOrNull(username);
     this.favouriteRestaurants = notUndefinedOrNull(favouriteRestaurants);
   }
+
+  public getId(): UserId {
+    return this.id;
+  }
+
+  public getUsername(): Username {
+    return this.username;
+  }
+
+  public getFavouriteRestaurants(): Restaurant[] {
+    return this.favouriteRestaurants;
+  }
 }

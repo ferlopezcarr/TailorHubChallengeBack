@@ -1,26 +1,66 @@
+import {
+  HealthApiAdapter,
+  MainApiAdapter,
+} from "@core/infraestructure/drivers/adapters";
+import {
+  CorsMiddleware,
+  LoggerMiddleware,
+} from "@core/infraestructure/drivers/adapters/middlewares";
 import express from "express";
-import { HealthRouter } from "./core/infraestructure/routes/health.router";
-import { MainRouter } from "./core/infraestructure/routes/main.router";
-import { RestaurantControlPlane } from "./features/restaurant/restaurant.routes";
+import { BodyParserMiddleware } from "./core/infraestructure/drivers/adapters/middlewares/body-parser.middleware";
+import { AuthControlPlane } from "./features/auth/application/auth.control-plane";
+import { TokenControlPlane } from "./features/auth/application/token.control-plane";
+import { AuthInMemoryRepositoryAdapter } from "./features/auth/infraestructure/driven/adapters/auth-repository.adapter";
+import { RestaurantControlPlane } from "./features/restaurant/application/restaurant.control-plane";
+import { RestaurantJsonRepositoryAdapter } from "./features/restaurant/infraestructure/driven/adapters/restaurant-json-repository.adapter";
+import { UserControlPlane } from "./features/user/application/user.control-plane";
+import { UserInMemoryRepositoryAdapter } from "./features/user/infraestructure/driven/adapters/user-in-memory-repository.adapter";
 
 export class App {
   public expressApp: express.Application;
   public port: number;
 
-  constructor(port: number, middlewares?: any[]) {
+  constructor(port: number) {
     this.expressApp = express(); //run the express instance and store in app
     this.port = port;
-    this.middlewares(middlewares);
 
-    new MainRouter(this.expressApp);
-    new HealthRouter(this.expressApp);
-    new RestaurantControlPlane(this.expressApp);
-  }
+    // Moddlewares
+    new BodyParserMiddleware(this.expressApp);
+    new LoggerMiddleware(this.expressApp);
+    new CorsMiddleware(this.expressApp);
 
-  private middlewares(middlewares?: any[]) {
-    middlewares?.forEach((middleware) => {
-      this.expressApp.use(middleware);
-    });
+    // Core Adapters
+    new MainApiAdapter(this.expressApp);
+    new HealthApiAdapter(this.expressApp);
+
+    // Feature Adapters
+    const authInMemoryRepositoryAdapter = new AuthInMemoryRepositoryAdapter();
+    const tokenControlPlane = new TokenControlPlane(
+      authInMemoryRepositoryAdapter
+    );
+    const authMiddleware = tokenControlPlane.getAuthMiddleware();
+
+    const restaurantRespositoryAdapter = new RestaurantJsonRepositoryAdapter();
+    new RestaurantControlPlane(
+      this.expressApp,
+      authMiddleware,
+      restaurantRespositoryAdapter
+    );
+
+    const userInMemoryRepositoryAdapter = new UserInMemoryRepositoryAdapter();
+    new UserControlPlane(
+      this.expressApp,
+      authMiddleware,
+      authInMemoryRepositoryAdapter,
+      userInMemoryRepositoryAdapter,
+      restaurantRespositoryAdapter
+    );
+
+    new AuthControlPlane(
+      this.expressApp,
+      authInMemoryRepositoryAdapter,
+      userInMemoryRepositoryAdapter
+    );
   }
 
   public listen() {

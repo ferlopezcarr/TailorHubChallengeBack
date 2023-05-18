@@ -1,6 +1,6 @@
 import { UseCase } from "@core/application/use-case";
 import { Restaurant } from "../../domain";
-import { RestaurantRespositoryPort } from "../../infraestructure/driven/ports/restaurant-respository.port";
+import { RestaurantRepositoryPort } from "../../infraestructure/driven/ports/restaurant-repository.port";
 import { RestaurantApi } from "../../infraestructure/drivers/models/restaurant-api.model";
 import {
   createRestaurantFromApi,
@@ -9,16 +9,15 @@ import {
 
 export class CreateRestaurantUseCase implements UseCase {
   constructor(
-    private readonly restaurantRepository: RestaurantRespositoryPort
+    private readonly restaurantRepository: RestaurantRepositoryPort
   ) {}
 
   async execute(restaurantApi: RestaurantApi): Promise<Restaurant> {
     const restaurant = createRestaurantFromApi(restaurantApi);
     const createdRestaurantFromRepository =
       await this.restaurantRepository.create(restaurant);
-    const createdRestaurant = createRestaurantFromRepository(
+    return createRestaurantFromRepository(
       createdRestaurantFromRepository
     );
-    return createdRestaurant;
   }
 }

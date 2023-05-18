@@ -1,9 +1,8 @@
-import { UserAuthentication } from "../../../domain/models";
-import { Token } from "../../../domain/models/token.model";
+import { Username } from "../../../../user/domain";
+import { UserAuth } from "../../../domain/models";
 
 export interface AuthRepositoryPort {
-    login(userAuthentication: UserAuthentication): Promise<Token>;
-    register(userAuthentication: UserAuthentication): Promise<Token>;
-    validate(token: Token): Promise<boolean>;
-    logout(token: Token): Promise<boolean>;
+  isUserRegistered(username: Username): Promise<boolean>;
+  login(userAuthentication: UserAuth): Promise<boolean>;
+  register(userAuthentication: UserAuth): Promise<boolean>;
 }

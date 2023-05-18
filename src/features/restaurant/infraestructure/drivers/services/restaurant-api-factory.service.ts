@@ -1,10 +1,10 @@
 import { notUndefinedOrNull } from "@core/domain/services";
 import { Restaurant } from "../../../domain";
 import { RestaurantApi } from "../models/restaurant-api.model";
-import { createOperatingHoursMapApiFromDomain } from "./operating-hours-map-api-factory.service";
-import { createReviewApiFromDomain } from "./review-factory.service";
+import { createOperatingHoursMapApiFromOperatingHours } from "./operating-hours-map-api-factory.service";
+import { createReviewApiFromReview } from "./review-factory.service";
 
-export const createRestaurantApiFromDomain = (
+export const createRestaurantApiFromRestaurant = (
   restaurant: Restaurant
 ): RestaurantApi => {
   notUndefinedOrNull(restaurant);
@@ -21,11 +21,11 @@ export const createRestaurantApiFromDomain = (
     },
     image: restaurant.getImageUrl().getImageUrl(),
     cuisine_type: restaurant.getCuisineType().getCuisineType(),
-    operating_hours: createOperatingHoursMapApiFromDomain(
+    operating_hours: createOperatingHoursMapApiFromOperatingHours(
       restaurant.getOperatingHours()
     ),
     reviews: restaurant
       .getReviews()
-      .map((review) => createReviewApiFromDomain(review)),
+      .map((review) => createReviewApiFromReview(review)),
   };
 };

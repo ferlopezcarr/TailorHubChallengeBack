@@ -1,14 +1,13 @@
-import { Restaurant } from "../../../domain/models/restaurant";
-import { RestaurantId } from "../../../domain/models/restaurant-id";
+import { RestaurantId } from "../../../domain/models/restaurant-id.model";
+import { Restaurant } from "../../../domain/models/restaurant.model";
 import { RestaurantRepository } from "../models/restaurant-repository";
-import { RestaurantRespositoryPort } from "../ports/restaurant-respository.port";
-
-import { isIntegerNumber, notUndefinedOrNull } from "@core/domain/services";
-import restaurantJsonData from "../../../../../../data/restaurants.json";
-import { EntityNotFoundException } from "@core/infraestructure/exceptions/entity-not-found.exception";
+import { RestaurantRepositoryPort } from "../ports/restaurant-repository.port";
+import { notUndefinedOrNull } from "@core/domain/services";
+import restaurantJsonData from "../../../../../data/restaurants.json";
+import { EntityNotFoundException } from "../../../../auth/application/exceptions/entity-not-found.exception";
 
 export class RestaurantJsonRepositoryAdapter
-  implements RestaurantRespositoryPort
+  implements RestaurantRepositoryPort
 {
   private readonly restaurantData: RestaurantRepository[];
 
@@ -42,15 +41,13 @@ export class RestaurantJsonRepositoryAdapter
     const restaurantRepositoryIndex = this.restaurantData.findIndex(
       (restaurant) => restaurant.id === restaurantId.getId()
     );
-    isIntegerNumber(restaurantRepositoryIndex);
     const restaurantRepositoryFound =
-      restaurantRepositoryIndex < 0
+      restaurantRepositoryIndex >= 0
         ? this.restaurantData[restaurantRepositoryIndex]
         : null;
     if (!restaurantRepositoryFound) {
       throw new EntityNotFoundException();
     }
-    //this.restaurantData[restaurantRepositoryIndex] = createRestaurantRepositoryFromDomain(restaurant);
     return Promise.resolve(this.restaurantData[restaurantRepositoryIndex]);
   }
 
@@ -60,7 +57,6 @@ export class RestaurantJsonRepositoryAdapter
     const restaurantRepositoryIndex = this.restaurantData.findIndex(
       (restaurant) => restaurant.id === restaurantId.getId()
     );
-    isIntegerNumber(restaurantRepositoryIndex);
     const restaurantRepositoryFound =
       restaurantRepositoryIndex >= 0
         ? this.restaurantData[restaurantRepositoryIndex]
@@ -70,9 +66,5 @@ export class RestaurantJsonRepositoryAdapter
     }
     this.restaurantData.splice(restaurantRepositoryIndex, 1);
     return Promise.resolve(restaurantRepositoryFound);
-  }
-
-  public markAsFavorite(restaurant: Restaurant): Promise<RestaurantRepository> {
-    throw new Error("Method not implemented.");
   }
 }

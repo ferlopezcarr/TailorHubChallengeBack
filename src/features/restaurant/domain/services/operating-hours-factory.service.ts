@@ -1,9 +1,9 @@
 import { notEmptyString, notUndefinedOrNull } from "@core/domain/services";
 import { OperatingHoursMapRepository } from "../../infraestructure/driven/models/operating-hours-map-repository";
 import { OperatingHoursMapApi } from "../../infraestructure/drivers/models/operating-hours-map-api.model";
-import { DAY_OF_WEEK_KEYS } from "../models/day-of-week";
-import { OperatingHours } from "../models/operating-hours";
-import { OperatingHoursMap } from "../models/operating-hours-map";
+import { DAY_OF_WEEK_KEYS } from "../models/day-of-week.model";
+import { OperatingHours } from "../models/operating-hours.model";
+import { OperatingHoursMap } from "../models/operating-hours-map.model";
 
 export const createOperatingHoursMapFromApi = (
   operatingHours: OperatingHoursMapApi
